@@ -1,4 +1,5 @@
 const db = require('../config/db')
+const dataUser = ['Robi','Deni','Fera'];
 //const { addBook } = require('../controllers/userController')
 
 //async - wait
@@ -24,12 +25,25 @@ const delBook = async(id)=>{
     return aff[0].affectedRows
 }
 
-const updateBook = async (kode, book) => {
+const updateBook = async (kode, book)  => {
     const { judul, pengarang, penerbit } = book
     const query = "UPDATE buku " + "SET judul = ?, pengarang = ?, penerbit = ? " + "WHERE kode_buku = ?"
     const affected = await db.query(query, [judul, pengarang, penerbit, kode])
     return affected[0].affectedRows
 }
 
+const getAllUser = ()=>{
+    return dataUser
+}
 
-module.exports = {getAllBooks,getBookByCode,addBook,delBook,updateBook}
+const getUserById = (id)=>{
+    const result = []
+    if(id <= dataUser.length){
+        result.push(dataUser[id-1])
+        return dataUser[id-1]
+    }
+    
+    return []
+}
+
+module.exports = {getAllBooks,getBookByCode,addBook,delBook,updateBook,getAllUser,getUserById}
